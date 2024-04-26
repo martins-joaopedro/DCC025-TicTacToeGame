@@ -13,11 +13,11 @@ Java tic-tac-toe game development for the Object Oriented Programming class
     - JDK 17 
     - Apache Maven 3.6.3 ou superior
 
-# **Sobre JDK**
-    Pode ser instalado diretamente pelo site da [ Oracle ](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) 
+**Sobre JDK:**
+    - Pode ser instalado diretamente pelo site da [ Oracle ](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)  
 
-# **Sobre o Maven**
-    Pode ser instalado diretamente pelo site da [ Maven ](https://maven.apache.org/download.cgi)
+**Sobre o Maven:**
+    - Pode ser instalado diretamente pelo site da [ Maven ](https://maven.apache.org/download.cgi)
 
 # Instalação
 - Para o JDK, é necesário seguir os passos do executável e adicionar o caminho do diretório \bin nas variáveis de ambiente Path
