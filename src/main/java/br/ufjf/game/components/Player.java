@@ -10,16 +10,6 @@ public class Player {
         this.name = name;
     }
 
-    public Player createPlayer() {
-
-        System.out.println("Informe o nome do jogador");
-        System.out.println("Informe o símbolo do jogador");
-
-        String symbol = "";
-        String name = "";
-        return new Player(symbol, name);
-    }
-
     public String getSymbol() {
         return symbol;
     }
