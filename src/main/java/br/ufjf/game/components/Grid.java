@@ -15,7 +15,6 @@ public class Grid implements GridActivity {
 
     @Override
     public boolean isGameOver() {
-
         if(verifyRows())
             return true;
         else if(verifyColumns())
@@ -23,12 +22,10 @@ public class Grid implements GridActivity {
         else if(verifyMainDiagonal())
             return true;
         else return verifySecondaryDiagonal();
-
     }
 
     @Override
     public boolean verifyRows() {
-
         for(int i=0; i<GridConstants.INLINE_CELL; i++) {
             String old = this.cells[i][0];
             boolean cond = true;
@@ -49,9 +46,7 @@ public class Grid implements GridActivity {
 
     @Override
     public boolean verifyColumns() {
-
         for(int i=0; i<GridConstants.INLINE_CELL; i++) {
-
             String old = this.cells[0][i];
             boolean cond = true;
             for(int j=0; j<GridConstants.INLINE_CELL; j++) {
@@ -71,7 +66,6 @@ public class Grid implements GridActivity {
 
     @Override
     public boolean verifyMainDiagonal() {
-
         boolean cond = true;
         String old = this.cells[0][0];
 
@@ -89,7 +83,6 @@ public class Grid implements GridActivity {
 
     @Override
     public boolean verifySecondaryDiagonal() {
-
         boolean cond = true;
         String old = this.cells[GridConstants.INLINE_CELL -1][0];
 
@@ -112,16 +105,16 @@ public class Grid implements GridActivity {
 
     @Override
     public boolean isValidCoords(int x, int y) {
-
-        if(x > 0 && x < GridConstants.INLINE_CELL)
-            if(y > 0 && y < GridConstants.INLINE_CELL)
+        if(x >= 0 && x < GridConstants.INLINE_CELL)
+            if(y >= 0 && y < GridConstants.INLINE_CELL)
                 return true;
+
+        System.out.println("Informe posições válidas!");
         return false;
     }
 
     @Override
     public void setCellValue(int x, int y, String val) {
-
         if(isValidCoords(x, y))
             if(isValidCell(x, y))
                 cells[x][y] = val;
@@ -133,7 +126,7 @@ public class Grid implements GridActivity {
     public void printGrid() {
         for(int i=0; i<GridConstants.INLINE_CELL; i++) {
             for(int j=0; j<GridConstants.INLINE_CELL; j++)
-                System.out.print(this.cells[i][j] + " ");
+                System.out.print("[ " + this.cells[i][j] + " ]");
             System.out.println();
         }
     }
