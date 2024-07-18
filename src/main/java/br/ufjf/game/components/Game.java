@@ -9,28 +9,48 @@ public class Game {
     private Gamemode gamemode;
     private Player player1;
     private Player player2;
+    //private Bot bot;
     private Grid grid;
+    private Menu menu;
+    private Scanner scanner;
 
-    private Scanner scanner = new Scanner(System.in);
-
-    public Game() {
-        // true = pl1 ; false = pl2
+    public Game(Scanner scanner) {
+        // randomize who starts playing
         Random random = new Random();
         this.startPlayer = random.nextInt() % 2 == 0;
+
         this.grid = new Grid();
+        this.menu = new Menu(scanner);
+        this.scanner = scanner;
     }
 
     public void start() {
-        showMenu();
+
+        menu.welcome();
+        this.gamemode = menu.askGamemode();
+
         createPlayers();
         gameLoop();
     }
 
-    public void playRound() {
+    private void createPlayers() {
+
+        if(gamemode == Gamemode.SINGLEPLAYER) {
+            String name = menu.askPlayerName(1);
+            String symbol = menu.askPlayerSymbol(1);
+            player1 = new Player(name, symbol);
+
+            name = menu.askPlayerName(2);
+            symbol = menu.askPlayerSymbol(2);
+            player2 = new Player(name, symbol);
+        }
+    }
+
+    public void startRound() {
 
         if(startPlayer)
-            System.out.println("Jogador: " + player1.getName());
-        else System.out.println("Jogador: " + player2.getName());
+            System.out.println("Jogador 1: " + player1.getName());
+        else System.out.println("Jogador 2: " + player2.getName());
 
         System.out.println("Digite uma coordenada x: ");
         int x = scanner.nextInt();
@@ -48,40 +68,11 @@ public class Game {
         this.startPlayer = !this.startPlayer;
     }
 
-    private void showMenu() {
-
-        System.out.println("==============================================");
-        System.out.println("=== Seja bem-vindo ao Jogo da Velha!!! === ");
-        System.out.println("==============================================");
-
-        //setGamemode
-
-
-
-    }
-
     private void gameLoop() {
-        //loop
         while(!this.grid.isGameOver()) {
-
-            playRound();
+            startRound();
             grid.printGrid();
             nextRound();
         }
-    }
-
-    private void createPlayers() {
-
-        System.out.println("Informe o nome do jogador 1");
-        String name = scanner.nextLine();
-        System.out.println("Informe o simbolo do jogador 1");
-        String symbol = scanner.nextLine();
-        player1 = new Player(symbol, name);
-
-        System.out.println("Informe o nome do jogador 2");
-        name = scanner.nextLine();
-        System.out.println("Informe o simbolo do jogador 2");
-        symbol = scanner.nextLine();
-        player2 = new Player(symbol, name);
     }
 }
