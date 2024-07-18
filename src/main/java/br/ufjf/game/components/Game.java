@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import br.ufjf.game.components.Menu;
 
 public class Game {
 
     private boolean startPlayer;
     private Gamemode gamemode;
     private List<Player> players;
-    //private Bot bot;
+    private Bot bot;
     private Grid grid;
     private Menu menu;
 
@@ -62,7 +63,7 @@ public class Game {
 
         players.add(new Player(name, newSymbol));
     }
-
+ 
     private int getCurrentPlayerIndex() {
         if(startPlayer)
             return 0;
@@ -70,23 +71,42 @@ public class Game {
     }
 
     private void initBot() {
+        String symbol = players.get(0).getSymbol();
+        String newSymbol = symbol == "X" ? "O" : "X";
 
+        this.bot = new Bot(newSymbol);
+    }
+
+    private void callPlayer(int playerIndex) {
+        if(playerIndex == 1 && gamemode == Gamemode.MULTIPLAYER) {
+            System.out.println("Oponente: ");
+        } else System.out.println("Jogador " + playerIndex + ": " + players.get(playerIndex).getName());
     }
 
     public void startRound() {
 
         int playerIndex = getCurrentPlayerIndex();
-        System.out.println("Jogador " + playerIndex + ": " + players.get(playerIndex).getName());
+        callPlayer(playerIndex);
 
         int x, y;
-        do {
-            x = menu.askPosition("x");
-            y = menu.askPosition("y");
-        } while(!grid.isValidCoords(x, y));
+        do {    
 
-        if(startPlayer)
-            grid.setCellValue(x, y, players.get(0).getSymbol());
-        else grid.setCellValue(x, y, players.get(1).getSymbol());
+            //bot time
+            if(gamemode == Gamemode.MULTIPLAYER && playerIndex == 1) {
+                System.out.println("O robô está escolhendo uma posição...");
+                x = this.bot.getARandomCoord();
+                y = this.bot.getARandomCoord();
+                System.out.println(x + "-" + y);
+            } else {
+                x = menu.askPosition("x");
+                y = menu.askPosition("y");
+            }
+
+        } while(!grid.isValidCoords(x, y, 0, this.gamemode));
+
+        if(playerIndex == 1 && gamemode == Gamemode.MULTIPLAYER)
+            grid.setCellValue(x, y, bot.getSymbol(), playerIndex, gamemode);
+        else grid.setCellValue(x, y, players.get(playerIndex).getSymbol(), playerIndex, gamemode);
     }
 
     public void alternatePlayer() {
@@ -95,7 +115,10 @@ public class Game {
 
     private void showWinner() {
         int playerIndex = getCurrentPlayerIndex();
-        System.out.println("Parabens, " + players.get(playerIndex).getName() + " você ganhou o jogo!");
+
+        if(playerIndex == 1 && gamemode == Gamemode.MULTIPLAYER)
+            System.out.println("Oponente ganhou o jogo!");
+        else System.out.println("Parabens, " + players.get(playerIndex).getName() + " você ganhou o jogo!");
     }
 
     private void gameLoop() {

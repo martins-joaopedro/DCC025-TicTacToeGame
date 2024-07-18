@@ -1,7 +1,6 @@
 package br.ufjf.game.components;
 
 import java.util.Scanner;
-import java.io.IOException;
 
 public class Menu {
 

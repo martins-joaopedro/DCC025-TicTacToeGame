@@ -1,5 +1,7 @@
 package br.ufjf.game.interfaces;
 
+import br.ufjf.game.components.Gamemode;
+
 public interface GridActivity {
     
     boolean isGameOver();
@@ -14,9 +16,9 @@ public interface GridActivity {
 
     boolean isValidCell(int x, int y);
 
-    boolean isValidCoords(int x, int y);
+    boolean isValidCoords(int x, int y, int playerIndex, Gamemode gamemode);
 
-    void setCellValue(int x, int y, String val);
+    void setCellValue(int x, int y, String val, int playerIndex, Gamemode gamemode);
 
     void printGrid();
 

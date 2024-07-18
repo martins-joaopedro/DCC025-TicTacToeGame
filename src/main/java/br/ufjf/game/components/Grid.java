@@ -104,18 +104,19 @@ public class Grid implements GridActivity {
     }
 
     @Override
-    public boolean isValidCoords(int x, int y) {
+    public boolean isValidCoords(int x, int y, int playerIndex, Gamemode gamemode) {
         if(x >= 0 && x < GridConstants.INLINE_CELL)
             if(y >= 0 && y < GridConstants.INLINE_CELL)
                 return true;
 
-        System.out.println("Informe posições válidas!");
+        if(playerIndex != 1 && gamemode != Gamemode.MULTIPLAYER)
+            System.out.println("Informe posições válidas!");
         return false;
     }
 
     @Override
-    public void setCellValue(int x, int y, String val) {
-        if(isValidCoords(x, y))
+    public void setCellValue(int x, int y, String val, int playerIndex, Gamemode gamemode) {
+        if(isValidCoords(x, y, playerIndex,  gamemode))
             if(isValidCell(x, y))
                 cells[x][y] = val;
             else System.out.println("Posição já ocupada!");
