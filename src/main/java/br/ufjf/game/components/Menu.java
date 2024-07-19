@@ -2,6 +2,8 @@ package br.ufjf.game.components;
 
 import java.util.Scanner;
 
+import br.ufjf.game.components.GridConstants;
+
 public class Menu {
 
     private Scanner scanner;
@@ -41,7 +43,7 @@ public class Menu {
         do {
             System.out.println("Jogador " + value + ": Digite o símbolo que deseja utilizar:");
             System.out.println("( 1 ) - X");
-            System.out.println("( 2 ) - 0");
+            System.out.println("( 2 ) - O");
             op = scanner.nextInt();
 
             if(!isValidOption(op, 1, 2))
@@ -60,7 +62,7 @@ public class Menu {
     }
 
     public int askPosition(String axis) {
-        System.out.println("Digite uma coordenada " + axis + ": ");
+        System.out.println("Digite uma coordenada " + axis + " de 1 - " + GridConstants.INLINE_CELL + ": ");
         String s = scanner.next();
 
         return Integer.parseInt(s);
