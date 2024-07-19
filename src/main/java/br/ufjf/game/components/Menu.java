@@ -30,9 +30,11 @@ public class Menu {
         } while(!isValidOption(op, 1, 2));
 
         if(op == 1)
-            return Gamemode.SINGLEPLAYER;
-        else return Gamemode.MULTIPLAYER;
+            return Gamemode.MULTIPLAYER;
+        else return Gamemode.SINGLEPLAYER;
     }
+
+    //inverter todos os singleplayer e multiplayer fora desse codigo
 
     public String askPlayerSymbol(int value) {
         int op;

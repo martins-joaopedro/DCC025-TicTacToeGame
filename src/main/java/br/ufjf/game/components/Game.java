@@ -29,7 +29,7 @@ public class Game {
         menu.welcome();
         this.gamemode = menu.askGamemode();
 
-        if(gamemode == Gamemode.SINGLEPLAYER) {
+        if(gamemode == Gamemode.MULTIPLAYER) {
             createFirstPlayer();
             alternatePlayer();
             createSecondPlayer();
@@ -78,9 +78,9 @@ public class Game {
     }
 
     private void callPlayer(int playerIndex) {
-        if(playerIndex == 1 && gamemode == Gamemode.MULTIPLAYER) {
+        if(playerIndex == 1 && gamemode == Gamemode.SINGLEPLAYER) {
             System.out.println("Oponente: ");
-        } else System.out.println("Jogador " + playerIndex + ": " + players.get(playerIndex).getName());
+        } else System.out.println("Jogador " + playerIndex + ": " + players.get(playerIndex).getName() + " - " + players.get(playerIndex).getSymbol());
     }
 
     public void startRound() {
@@ -92,19 +92,26 @@ public class Game {
         do {    
 
             //bot time
-            if(gamemode == Gamemode.MULTIPLAYER && playerIndex == 1) {
+            if(gamemode == Gamemode.SINGLEPLAYER && playerIndex == 1) {
                 System.out.println("O robô está escolhendo uma posição...");
-                x = this.bot.getARandomCoord();
-                y = this.bot.getARandomCoord();
-                System.out.println(x + "-" + y);
+                
+                do {
+                    x = this.bot.getARandomCoord();
+                    y = this.bot.getARandomCoord();
+
+                } while (!grid.isValidCell(x, y));
+
             } else {
                 x = menu.askPosition("x");
                 y = menu.askPosition("y");
+
+                x--;
+                y--;
             }
 
-        } while(!grid.isValidCoords(x, y, 0, this.gamemode));
+        } while(!grid.isValidCoords(x, y, playerIndex, this.gamemode));
 
-        if(playerIndex == 1 && gamemode == Gamemode.MULTIPLAYER)
+        if(playerIndex == 1 && gamemode == Gamemode.SINGLEPLAYER)
             grid.setCellValue(x, y, bot.getSymbol(), playerIndex, gamemode);
         else grid.setCellValue(x, y, players.get(playerIndex).getSymbol(), playerIndex, gamemode);
     }
@@ -116,7 +123,7 @@ public class Game {
     private void showWinner() {
         int playerIndex = getCurrentPlayerIndex();
 
-        if(playerIndex == 1 && gamemode == Gamemode.MULTIPLAYER)
+        if(playerIndex == 1 && gamemode == Gamemode.SINGLEPLAYER)
             System.out.println("Oponente ganhou o jogo!");
         else System.out.println("Parabens, " + players.get(playerIndex).getName() + " você ganhou o jogo!");
     }

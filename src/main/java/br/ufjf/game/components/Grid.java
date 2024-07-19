@@ -36,10 +36,9 @@ public class Grid implements GridActivity {
                     break;
                 }
             }
-            if(cond) {
-                System.out.println("linhas");
-                return cond;
-            }
+
+            if(cond) 
+                return true;
         }
         return false;
     }
@@ -56,10 +55,8 @@ public class Grid implements GridActivity {
                 }
             }
 
-            if(cond) {
-                System.out.println("colunas");
-                return cond;
-            }
+            if(cond) 
+                return true;
         }
         return false;
     }
@@ -76,8 +73,6 @@ public class Grid implements GridActivity {
             }
         }
 
-        if(cond)
-            System.out.println("diag 1");
         return cond;
     }
 
@@ -93,8 +88,6 @@ public class Grid implements GridActivity {
             }
         }
 
-        if(cond)
-            System.out.println("diag 2");
         return cond;
     }
 
@@ -105,11 +98,13 @@ public class Grid implements GridActivity {
 
     @Override
     public boolean isValidCoords(int x, int y, int playerIndex, Gamemode gamemode) {
+        
         if(x >= 0 && x < GridConstants.INLINE_CELL)
             if(y >= 0 && y < GridConstants.INLINE_CELL)
-                return true;
-
-        if(playerIndex != 1 && gamemode != Gamemode.MULTIPLAYER)
+                if(isValidCell(x, y))
+                    return true;
+        
+        if(gamemode != Gamemode.SINGLEPLAYER || playerIndex != 1)    
             System.out.println("Informe posições válidas!");
         return false;
     }
@@ -119,15 +114,23 @@ public class Grid implements GridActivity {
         if(isValidCoords(x, y, playerIndex,  gamemode))
             if(isValidCell(x, y))
                 cells[x][y] = val;
-            else System.out.println("Posição já ocupada!");
-        else System.out.println("Informe posições válidas!");
+            else if(playerIndex != 1 && gamemode != Gamemode.SINGLEPLAYER)
+                System.out.println("Posição já ocupada!");
+        else if(playerIndex != 1 && gamemode != Gamemode.SINGLEPLAYER) 
+            System.out.println("Informe posições válidas!");
     }
 
     @Override
     public void printGrid() {
+        for(int i=0; i<GridConstants.INLINE_CELL; i++)
+            System.out.print(String.format("%5s", i+1) + " ");
+        System.out.println();
+
         for(int i=0; i<GridConstants.INLINE_CELL; i++) {
-            for(int j=0; j<GridConstants.INLINE_CELL; j++)
-                System.out.print("[ " + this.cells[i][j] + " ]");
+            System.out.print((i+1) + " ");
+            for(int j=0; j<GridConstants.INLINE_CELL; j++) {
+                System.out.print(String.format("[ %1s ]", this.cells[i][j]) + " ");
+            }
             System.out.println();
         }
     }
