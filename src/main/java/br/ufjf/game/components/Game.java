@@ -121,13 +121,14 @@ public class Game {
             player = "Oponente robô";
             grid.setCellValue(x, y, bot.getSymbol(), playerIndex, gamemode);
         } else {
-            player = "Jogador " + playerIndex + ": " + players.get(playerIndex).getName();
+            player = "Jogador " + playerIndex+1 + " (" + players.get(playerIndex).getName() + ")";
             grid.setCellValue(x, y, players.get(playerIndex).getSymbol(), playerIndex, gamemode);
         }    
 
-        step = String.format("ROUND %d: %s marcou as posições (x, y) - (%d,%d)", round, player, x, y);
+        step = String.format("ROUND %d: %s marcou as posições (x, y) - (%d,%d)", round, player, x+1, y+1);
+        step += "\n";
+        step += this.grid.getGridString(x, y);
         steps.add(step);
-        steps.add(this.grid.getGridString(x, y));
     }
 
     public void alternatePlayer() {

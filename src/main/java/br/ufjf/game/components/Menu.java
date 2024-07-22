@@ -72,10 +72,13 @@ public class Menu {
         if(op == 1) {
             int step = 0;
             do {
+
+                System.out.println(steps.get(step));
+
                 if(step != 0)
                     System.out.println("( 1 ) - Voltar 1 round");
                 System.out.println("( 2 ) - Encerrar");
-                if(step != steps.size()-2)
+                if(step != steps.size()-1)
                     System.out.println("( 3 ) - Avançar 1 round");
                 op = scanner.nextInt();
 
@@ -83,12 +86,6 @@ public class Menu {
                     step = step > 0 ? step-1 : step;
                 else if(op == 3) 
                     step = step < steps.size()-1 ? step+1 : step;
-                else op = 0;
-
-                System.out.println("AAAAAAAAAAAAA" + step);
-
-                for(int i=0; i<2; i++)
-                    System.out.println(steps.get(i + step));
 
                 if(!isValidOption(op, 1, 3))
                     System.out.println("Valores inválidos, digite novamente!");
