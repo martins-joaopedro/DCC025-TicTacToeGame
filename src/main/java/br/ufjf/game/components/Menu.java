@@ -1,5 +1,6 @@
 package br.ufjf.game.components;
 
+import java.util.List;
 import java.util.Scanner;
 
 import br.ufjf.game.components.GridConstants;
@@ -36,8 +37,6 @@ public class Menu {
         else return Gamemode.SINGLEPLAYER;
     }
 
-    //inverter todos os singleplayer e multiplayer fora desse codigo
-
     public String askPlayerSymbol(int value) {
         int op;
         do {
@@ -54,6 +53,48 @@ public class Menu {
         if(op == 1)
             return "X";
         else return "O";
+    }
+
+    public void askForMatchReplay(List<String> steps) {
+        
+        int op;
+        do {
+            System.out.println("Fim do jogo, você deseja");
+            System.out.println("( 1 ) - Rever partida");
+            System.out.println("( 2 ) - Encerrar jogo");
+            op = scanner.nextInt();
+
+            if(!isValidOption(op, 1, 2))
+                System.out.println("Valores inválidos, digite novamente!");
+
+        } while(!isValidOption(op, 1, 2));
+
+        if(op == 1) {
+            int step = 0;
+            do {
+                if(step != 0)
+                    System.out.println("( 1 ) - Voltar 1 round");
+                System.out.println("( 2 ) - Encerrar");
+                if(step != steps.size()-2)
+                    System.out.println("( 3 ) - Avançar 1 round");
+                op = scanner.nextInt();
+
+                if(op == 1)
+                    step = step > 0 ? step-1 : step;
+                else if(op == 3) 
+                    step = step < steps.size()-1 ? step+1 : step;
+                else op = 0;
+
+                System.out.println("AAAAAAAAAAAAA" + step);
+
+                for(int i=0; i<2; i++)
+                    System.out.println(steps.get(i + step));
+
+                if(!isValidOption(op, 1, 3))
+                    System.out.println("Valores inválidos, digite novamente!");
+            
+            } while(op != 2);
+        }
     }
 
     public String askPlayerName(int value) {

@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-import br.ufjf.game.components.Menu;
 
 public class Game {
 
     private boolean startPlayer;
     private Gamemode gamemode;
     private List<Player> players;
+    private int round = 0;
+    private List<String> steps; 
     private Bot bot;
     private Grid grid;
     private Menu menu;
@@ -20,6 +21,7 @@ public class Game {
         Random random = new Random();
         this.startPlayer = random.nextInt() % 2 == 0;
 
+        this.steps = new ArrayList<String>();
         this.players = new ArrayList<Player>();
         this.grid = new Grid();
         this.menu = new Menu(scanner);
@@ -111,9 +113,21 @@ public class Game {
 
         } while(!grid.isValidCoords(x, y, playerIndex, this.gamemode));
 
-        if(playerIndex == 1 && gamemode == Gamemode.SINGLEPLAYER)
+        String player = "";
+        String step = "";
+        round++;
+
+        if(playerIndex == 1 && gamemode == Gamemode.SINGLEPLAYER) {
+            player = "Oponente robô";
             grid.setCellValue(x, y, bot.getSymbol(), playerIndex, gamemode);
-        else grid.setCellValue(x, y, players.get(playerIndex).getSymbol(), playerIndex, gamemode);
+        } else {
+            player = "Jogador " + playerIndex + ": " + players.get(playerIndex).getName();
+            grid.setCellValue(x, y, players.get(playerIndex).getSymbol(), playerIndex, gamemode);
+        }    
+
+        step = String.format("ROUND %d: %s marcou as posições (x, y) - (%d,%d)", round, player, x, y);
+        steps.add(step);
+        steps.add(this.grid.getGridString(x, y));
     }
 
     public void alternatePlayer() {
@@ -135,7 +149,7 @@ public class Game {
         do {
             startRound();
             grid.printGrid();
-            isGameOver = this.grid.isGameOver();
+            isGameOver = this.grid.isGameOver(round);
 
             if(!isGameOver)
                 alternatePlayer();
@@ -144,5 +158,7 @@ public class Game {
         if(isGameOver)
             showWinner();
         else System.out.println("Deu velha!!!");
+
+        this.menu.askForMatchReplay(steps);
     }
 }

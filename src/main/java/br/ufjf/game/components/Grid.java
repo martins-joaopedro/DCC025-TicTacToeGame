@@ -14,7 +14,11 @@ public class Grid implements GridActivity {
     }
 
     @Override
-    public boolean isGameOver() {
+    public boolean isGameOver(int rounds) {
+
+        if(rounds == 9)
+            return true;
+
         if(verifyRows())
             return true;
         else if(verifyColumns())
@@ -133,5 +137,28 @@ public class Grid implements GridActivity {
             }
             System.out.println();
         }
+    }
+
+    public String getGridString(int x, int y) {
+        String grid = "";
+
+        for(int i=0; i<GridConstants.INLINE_CELL; i++)
+            grid += String.format("%5s", i+1); 
+        grid += "\n";
+
+        for(int i=0; i<GridConstants.INLINE_CELL; i++) {
+            grid += (i+1);
+            for(int j=0; j<GridConstants.INLINE_CELL; j++) {
+                String value = this.cells[i][j].toLowerCase();
+                if(i == x && j == y) {
+                    value = this.cells[i][j].toUpperCase();
+                    grid += String.format("[ %1s ]", value);
+                } else grid += String.format("| %1s |", value);
+            }
+            grid += "\n";
+        }
+        grid += "\n";
+        
+        return grid;
     }
 }
