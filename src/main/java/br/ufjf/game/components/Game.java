@@ -47,8 +47,8 @@ public class Game {
 
         int playerIndex = getCurrentPlayerIndex();
 
-        String name = menu.askPlayerName(playerIndex);
-        String symbol = menu.askPlayerSymbol(playerIndex);
+        String name = menu.askPlayerName(playerIndex+1);
+        String symbol = menu.askPlayerSymbol(playerIndex+1);
 
         players.add(new Player(name, symbol));
     }
@@ -57,7 +57,7 @@ public class Game {
 
         int playerIndex = getCurrentPlayerIndex();
 
-        String name = menu.askPlayerName(playerIndex);
+        String name = menu.askPlayerName(playerIndex+1);
         String symbol = players.get(0).getSymbol();
         String newSymbol = symbol == "X" ? "O" : "X";
 
@@ -80,13 +80,17 @@ public class Game {
     }
 
     private void callPlayer(int playerIndex) {
+        System.out.println();
+        System.out.println("ROUND : " + round);
         if(playerIndex == 1 && gamemode == Gamemode.SINGLEPLAYER) {
             System.out.println("Oponente: ");
-        } else System.out.println("Jogador " + playerIndex + ": " + players.get(playerIndex).getName() + " - " + players.get(playerIndex).getSymbol());
+        } else System.out.println("Jogador " + (playerIndex+1) + " - " + players.get(playerIndex).getName() + " - " + players.get(playerIndex).getSymbol());
     }
 
     public void startRound() {
-
+        
+        round++;
+        
         int playerIndex = getCurrentPlayerIndex();
         callPlayer(playerIndex);
 
@@ -115,13 +119,12 @@ public class Game {
 
         String player = "";
         String step = "";
-        round++;
 
         if(playerIndex == 1 && gamemode == Gamemode.SINGLEPLAYER) {
             player = "Oponente robô";
             grid.setCellValue(x, y, bot.getSymbol(), playerIndex, gamemode);
         } else {
-            player = "Jogador " + playerIndex+1 + " (" + players.get(playerIndex).getName() + ")";
+            player = "Jogador " + (playerIndex+1) + " (" + players.get(playerIndex).getName() + ")";
             grid.setCellValue(x, y, players.get(playerIndex).getSymbol(), playerIndex, gamemode);
         }    
 
@@ -150,11 +153,11 @@ public class Game {
         do {
             startRound();
             grid.printGrid();
-            isGameOver = this.grid.isGameOver(round);
+            isGameOver = this.grid.isGameOver();
 
             if(!isGameOver)
                 alternatePlayer();
-        } while(!isGameOver);
+        } while(!isGameOver && round != 9);
 
         if(isGameOver)
             showWinner();

@@ -4,7 +4,7 @@ import br.ufjf.game.components.Gamemode;
 
 public interface GridActivity {
     
-    boolean isGameOver(int rounds);
+    boolean isGameOver();
 
     boolean verifyRows();
 

@@ -14,10 +14,7 @@ public class Grid implements GridActivity {
     }
 
     @Override
-    public boolean isGameOver(int rounds) {
-
-        if(rounds == 9)
-            return true;
+    public boolean isGameOver() {
 
         if(verifyRows())
             return true;
@@ -147,7 +144,7 @@ public class Grid implements GridActivity {
         grid += "\n";
 
         for(int i=0; i<GridConstants.INLINE_CELL; i++) {
-            grid += (i+1);
+            grid += ((i+1) + " ");
             for(int j=0; j<GridConstants.INLINE_CELL; j++) {
                 String value = this.cells[i][j].toLowerCase();
                 if(i == x && j == y) {
