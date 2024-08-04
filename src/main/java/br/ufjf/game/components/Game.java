@@ -97,7 +97,6 @@ public class Game {
         int x, y;
         do {    
 
-            //bot time
             if(gamemode == Gamemode.SINGLEPLAYER && playerIndex == 1) {
                 System.out.println("O robô está escolhendo uma posição...");
                 
@@ -108,11 +107,10 @@ public class Game {
                 } while (!grid.isValidCell(x, y));
 
             } else {
-                x = menu.askPosition("x");
-                y = menu.askPosition("y");
+                Movement move = this.menu.askPosition();
 
-                x--;
-                y--;
+                x = move.x() -1;
+                y = move.y() -1;
             }
 
         } while(!grid.isValidCoords(x, y, playerIndex, this.gamemode));

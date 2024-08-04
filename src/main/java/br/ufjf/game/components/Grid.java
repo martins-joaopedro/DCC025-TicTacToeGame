@@ -1,8 +1,6 @@
 package br.ufjf.game.components;
 
-import br.ufjf.game.interfaces.GridActivity;
-
-public class Grid implements GridActivity {
+public class Grid {
 
     private String[][] cells = new String[GridConstants.INLINE_CELL][GridConstants.INLINE_CELL];
 
@@ -13,7 +11,6 @@ public class Grid implements GridActivity {
                 this.cells[i][j] = GridConstants.EMPTY_CELL;
     }
 
-    @Override
     public boolean isGameOver() {
 
         if(verifyRows())
@@ -25,7 +22,6 @@ public class Grid implements GridActivity {
         else return verifySecondaryDiagonal();
     }
 
-    @Override
     public boolean verifyRows() {
         for(int i=0; i<GridConstants.INLINE_CELL; i++) {
             String old = this.cells[i][0];
@@ -44,7 +40,6 @@ public class Grid implements GridActivity {
         return false;
     }
 
-    @Override
     public boolean verifyColumns() {
         for(int i=0; i<GridConstants.INLINE_CELL; i++) {
             String old = this.cells[0][i];
@@ -62,7 +57,6 @@ public class Grid implements GridActivity {
         return false;
     }
 
-    @Override
     public boolean verifyMainDiagonal() {
         boolean cond = true;
         String old = this.cells[0][0];
@@ -77,7 +71,6 @@ public class Grid implements GridActivity {
         return cond;
     }
 
-    @Override
     public boolean verifySecondaryDiagonal() {
         boolean cond = true;
         String old = this.cells[GridConstants.INLINE_CELL -1][0];
@@ -92,12 +85,10 @@ public class Grid implements GridActivity {
         return cond;
     }
 
-    @Override
     public boolean isValidCell(int x, int y) {
         return cells[x][y] == GridConstants.EMPTY_CELL;
     }
 
-    @Override
     public boolean isValidCoords(int x, int y, int playerIndex, Gamemode gamemode) {
         
         if(x >= 0 && x < GridConstants.INLINE_CELL)
@@ -110,7 +101,6 @@ public class Grid implements GridActivity {
         return false;
     }
 
-    @Override
     public void setCellValue(int x, int y, String val, int playerIndex, Gamemode gamemode) {
         if(isValidCoords(x, y, playerIndex,  gamemode))
             if(isValidCell(x, y))
@@ -121,7 +111,6 @@ public class Grid implements GridActivity {
             System.out.println("Informe posições válidas!");
     }
 
-    @Override
     public void printGrid() {
         for(int i=0; i<GridConstants.INLINE_CELL; i++)
             System.out.print(String.format("%5s", i+1) + " ");
